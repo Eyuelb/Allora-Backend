@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-serve.zip
-node_modules
-=======
 # Logs
 logs
 *.log
@@ -27,7 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
->>>>>>> 9cca39ea3d5914408e41048a42f6af8e154933f9
 appv2.zip
 package.zip
 package-lock.json
