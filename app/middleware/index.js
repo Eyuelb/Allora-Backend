@@ -6,6 +6,8 @@ const forget = require("./auth/forget");
 const signIn = require("./auth/signIn");
 const reset = require("./auth/reset");
 const order = require("./order/order");
+const uploadImage = require("./image/uploadImage");
+
 module.exports = {
   authJwt,
   signUp,
@@ -14,6 +16,6 @@ module.exports = {
   access,
   forget,
   reset,
-  order
-  
+  order,
+  uploadImage
 };

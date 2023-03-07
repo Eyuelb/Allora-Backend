@@ -19,6 +19,8 @@ const cart_controller = require("./cart/cart.controller");
 const cartItems_controller = require("./cart/cartItem.controller");
 
 const discount_controller = require("./discount/discount.controller");
+const imageController = require("./image/image.controller");
+
 module.exports = {
   auth_controller,
   user_controller,
@@ -35,5 +37,6 @@ module.exports = {
   cartItems_controller,
   order_controller,
   orderItems_controller,
-  discount_controller
+  discount_controller,
+  imageController
 };

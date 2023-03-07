@@ -1,4 +1,4 @@
-const { authJwt , access } = require("../../middleware");
+const { authJwt , access,uploadImage } = require("../../middleware");
 const { product_controller} = require("../../controllers");
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -15,7 +15,9 @@ module.exports = function(app) {
 
   app.get("/api/product/get",[], product_controller.findOneProduct);
 
-  app.post("/api/product/add",[authJwt.verifyToken, access.isAdmin], product_controller.add);
+  app.get("/api/productImage/get",[], product_controller.getProductImage);
+
+  app.post("/api/product/add",[authJwt.verifyToken, access.isAdmin],[uploadImage.uploadMultipleImageMiddleware], product_controller.add);
 
   app.put("/api/product/update",[authJwt.verifyToken, access.isAdmin], product_controller.updateOneProduct);
 

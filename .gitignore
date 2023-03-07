@@ -1,1 +1,5 @@
-/serve.zip
+./serve.zip
+./node_modules
+./appv2.zip
+./package.zip
+./package-lock.json
