@@ -48,12 +48,12 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
       //allowNull: false
     },
-    productMainImage: {
+    productMainImageID: {
       type: Sequelize.STRING,
       //allowNull: false
     },
-    productAdditionalImages: {
-      type: Sequelize.STRING,
+    productAdditionalImagesID: {
+      type: Sequelize.ARRAY(Sequelize.STRING),
       //allowNull: false
     },
     productVisibility: {
