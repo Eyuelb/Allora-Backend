@@ -51,7 +51,7 @@ const gm = require('gm');
 
 async function compressImage(inputPath, outputPath, quality, callback) {
   try {
-    gm(inputPath)
+    gm(inputPath)  
       .compress('JPEG')
       .quality(quality)
       .write(outputPath,(err,buffer) => { 
