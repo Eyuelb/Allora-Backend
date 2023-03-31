@@ -53,7 +53,7 @@ const uploadSingleImageMiddleware = async (req, res, next) => {
 
 
 const uploadMultipleImageMiddleware = (req, res, next) => {
-  upload.fields([{ name: 'productMainImage', maxCount: 1 },{ name: 'productAdditionalImages', maxCount: 5 }])(req, res, function (err) {
+  upload.fields([{ name: 'productMainImageFiles', maxCount: 1 },{ name: 'productAdditionalImagesFiles', maxCount: 5 }])(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       return res.status(500).json({ message: 'Error uploading images-Middleware', err });
     } else if (err) {

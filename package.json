@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "devStart": "node Server.js"
+    "devStart": "nodemon Server.js"
   },
   "keywords": [
     "node js",
@@ -25,6 +25,7 @@
     "express-rate-limit": "^6.6.0",
     "gm": "^1.25.0",
     "helmet": "^6.0.0",
+    "http": "^0.0.1-security",
     "http-errors": "^2.0.0",
     "jimp": "^0.22.7",
     "jsonwebtoken": "^8.5.1",
@@ -34,6 +35,8 @@
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.25.3",
+    "socket.io": "^4.6.1",
+    "socketio-jwt": "^4.6.2",
     "validator": "^13.7.0",
     "xss-clean": "^0.1.1"
   }

@@ -19,7 +19,9 @@ const cart_controller = require("./cart/cart.controller");
 const cartItems_controller = require("./cart/cartItem.controller");
 
 const discount_controller = require("./discount/discount.controller");
-const imageController = require("./image/image.controller");
+const image_controller = require("./image/image.controller");
+const version_controller = require("./version/version.controller");
+const version_websocket_controller = require("./version/version.websocket.controller");
 
 module.exports = {
   auth_controller,
@@ -38,5 +40,8 @@ module.exports = {
   order_controller,
   orderItems_controller,
   discount_controller,
-  imageController
+  image_controller,
+  version_controller,
+  version_websocket_controller
+
 };

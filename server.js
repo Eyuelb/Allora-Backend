@@ -1,10 +1,30 @@
 const express = require("express");
+const http = require('http');
+
 const bodyParser = require("body-parser");
 const xss = require ('xss-clean');
 const cors = require ('cors');
 const helmet = require ('helmet');
+const socketioJwt = require('socketio-jwt');
 
 const app = express();
+const server = http.createServer(app);
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"]
+  }
+});
+const config = require("./app/config/auth.config");
+io.use(socketioJwt.authorize({
+  secret: config.secret,
+  handshake: true
+}));
+ 
+io.on('connection', (socket) => {
+  console.log('hello!', socket.decoded_token.id);
+});
+//const io = socketIO(server);
 
 var corsOptions = {
   origin: "http://localhost:5173"
@@ -55,9 +75,16 @@ require('./app/routes/payment/payment.routes')(app);
 
 require('./app/routes/cart/cart.routes')(app);
 require('./app/routes/cart/cartItems.routes')(app);
+
+
+// routes web socket
+require('./app/routes/version/version.routes')(app,io);
+
+
+
 // set port, listen for requests
-const PORT = process.env.PORT || 8081;
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 8080; 
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
