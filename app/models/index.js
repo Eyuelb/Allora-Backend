@@ -161,6 +161,14 @@ db.ROLES = ["user", "admin", "moderator"];
 
 //sequelize.sync();
 
+// db.sequelize.sync().then(async () => {
+//   try {
+//     await db.language.drop();
+//     console.log('Translation table has been deleted!');
+//   } catch (error) {
+//     console.error('Error deleting Translation table:', error);
+//   }
+// });
 // async function getTableNames() {
 //   try {
 //     // Synchronize all defined models with the database

@@ -23,6 +23,9 @@ const image_controller = require("./image/image.controller");
 const version_controller = require("./version/version.controller");
 const version_websocket_controller = require("./version/version.websocket.controller");
 
+
+const language_controller = require("./language/language.controller");
+const translation_controller = require("./translation/translation.controller");
 module.exports = {
   auth_controller,
   user_controller,
@@ -42,6 +45,8 @@ module.exports = {
   discount_controller,
   image_controller,
   version_controller,
-  version_websocket_controller
+  version_websocket_controller,
+  language_controller,
+  translation_controller
 
 };

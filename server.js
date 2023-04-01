@@ -9,21 +9,21 @@ const socketioJwt = require('socketio-jwt');
 
 const app = express();
 const server = http.createServer(app);
-const io = require("socket.io")(server, {
-  cors: {
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST"]
-  }
-});
-const config = require("./app/config/auth.config");
-io.use(socketioJwt.authorize({
-  secret: config.secret,
-  handshake: true
-}));
+// const io = require("socket.io")(server, {
+//   cors: {
+//     origin: "http://localhost:5173",
+//     methods: ["GET", "POST"]
+//   }
+// });
+// const config = require("./app/config/auth.config");
+// io.use(socketioJwt.authorize({
+//   secret: config.secret,
+//   handshake: true
+// }));
  
-io.on('connection', (socket) => {
-  console.log('hello!', socket.decoded_token.id);
-});
+// io.on('connection', (socket) => {
+//   console.log('hello!', socket.decoded_token.id);
+// });
 //const io = socketIO(server);
 
 var corsOptions = {
@@ -78,9 +78,12 @@ require('./app/routes/cart/cartItems.routes')(app);
 
 
 // routes web socket
-require('./app/routes/version/version.routes')(app,io);
+// require('./app/routes/version/version.routes')(app,io);
 
 
+// routes web socket
+require('./app/routes/language/language.routes')(app);
+require('./app/routes/translation/translation.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080; 
