@@ -1,12 +1,12 @@
 DB_HOST=localhost
 DB_USER="postgres"
-DB_PASSWORD="kidus@DB21!"
+DB_PASSWORD=""
 DB_NAME="testdb"
 DB_DIALECT="postgres"
 SECRET_KEY="bezkoder-secret-key"
 JWT_EXPIRATION=6000004000
 JWT_REFRESH_EXPIRATION=64000
-GOOGLE_CLIENT_ID='618582304346-2cn1t1t6su2h035ki7eee3mntnr4bu2k.apps.googleusercontent.com'
-GOOGLE_CLIENT_SECRET= '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'
+GOOGLE_CLIENT_ID=''
+GOOGLE_CLIENT_SECRET= ''
 GOOGLE_CALLBACK_URL= 'http://localhost:8080/api/auth/google/callback'
 CORS_OPTIONS="http://localhost:5173"
