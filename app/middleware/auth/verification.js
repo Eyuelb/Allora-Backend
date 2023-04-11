@@ -8,7 +8,7 @@ const createVerificationCode = () => {
   return Math.floor(Math
     .random() * (maxm - minm + 1)) + minm;
 }
-
+ 
 
 
 checkVerificationCodeStatus = (req, res, next) => {
@@ -150,7 +150,7 @@ updateResetVerificationCodeStatus = (req, res, next) => {
           return res.status(403).send({
             message: "Invalid User"
           });
-        }
+        } 
 
         if (user) {
 

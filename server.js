@@ -1,12 +1,13 @@
 const express = require("express");
+const session = require('express-session');
+require('dotenv').config()
 const http = require('http');
-
+const passport = require("passport");
 const bodyParser = require("body-parser");
 const xss = require ('xss-clean');
 const cors = require ('cors');
 const helmet = require ('helmet');
 const socketioJwt = require('socketio-jwt');
-
 const app = express();
 const server = http.createServer(app);
 // const io = require("socket.io")(server, {
@@ -26,12 +27,11 @@ const server = http.createServer(app);
 // });
 //const io = socketIO(server);
 
+const origin = process.env.CORS_OPTIONS || '';
 var corsOptions = {
-  origin: "http://localhost:5173"
+  origin: origin
 };
-// var corsOptions = {
-//   origin: "http://localhost:3000"
-// };
+
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(cors(corsOptions));
 app.use (xss ());
@@ -39,6 +39,21 @@ app.use (bodyParser.json ({ limit: '10kb' }));
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+const secretKey = process.env.SESSION_SECRET_KEY || '';
+
+app.use(session({
+  secret: secretKey,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: true,
+    httpOnly: true,
+    maxAge: 30 * 60 * 1000 // session timeout of 30 minutes
+  }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+// serialize user into session
 
 // database
 const db = require("./app/models/");
@@ -57,7 +72,7 @@ const CardType = db.cardType;
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to allora-ecommerce application." });
 });
-
+ 
 // routes
 require('./app/routes/auth/auth.routes')(app);
 require('./app/routes/user/user.routes')(app);
@@ -90,11 +105,11 @@ const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
-
+ 
 function initial() {
-  Role.create({
-    id: 1,
-    name: "user"
+  Role.create({ 
+    id: 1, 
+    name: "user" 
   });
  
   Role.create({

@@ -4,13 +4,17 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
       primaryKey: true
     },
-    sess: {
+    data: {
       type: Sequelize.JSON
     },
-    expire: {
-      type: Sequelize.STRING
+    expires: {
+      type: Sequelize.DATE
     }
+  }, {
+    tableName: 'sessions',
+    timestamps: false,
   });
+
 
   return Session;
 };

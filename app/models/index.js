@@ -1,22 +1,25 @@
 const {generateId} = require('../utils');
 
-const config = require("../config/db.config.js");
-
+const dbHost = process.env.DB_HOST || 'localhost'
+const dbUser = process.env.DB_USER || ''
+const dbPassword = process.env.DB_PASSWORD || ''
+const dbName = process.env.DB_NAME || ''
+const dbDialect = process.env.DB_DIALECT || 'postgres'
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(
-  config.DB,
-  config.USER,
-  config.PASSWORD,
+  dbName,
+  dbUser,
+  dbPassword,
   {
-    host: config.HOST,
-    dialect: config.dialect,
+    host: dbHost,
+    dialect: dbDialect,
     operatorsAliases: false,
 
     pool: {
-      max: config.pool.max,
-      min: config.pool.min,
-      acquire: config.pool.acquire,
-      idle: config.pool.idle
+      max: 5,
+      min: 0,
+      acquire: 3000,
+      idle: 10000
     }
   }
 );

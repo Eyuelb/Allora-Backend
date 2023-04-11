@@ -15,7 +15,7 @@ module.exports = function(app) {
 
   app.get("/api/language/get",[authJwt.verifyToken], language_controller.findOneLanguage);
 
-  app.post("/api/language/add",[authJwt.verifyToken, access.isAdmin], language_controller.add);
+  app.post("/api/language/add",[authJwt.verifyToken, access.isAdmin], language_controller.addLanguage);
 
   app.put("/api/language/update",[authJwt.verifyToken, access.isAdmin], language_controller.updateOneLanguage);
 

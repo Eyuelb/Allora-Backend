@@ -1,3 +1,4 @@
+
 module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define("users", {
     fullname: {
@@ -16,7 +17,8 @@ module.exports = (sequelize, Sequelize) => {
     },
     email: {
       type: Sequelize.STRING,
-     // allowNull: false
+      allowNull: false,
+      unique: true,
     },
     password: {
       type: Sequelize.STRING,
@@ -38,6 +40,16 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
       // allowNull defaults to true
     },
+    google_id: {
+      type: Sequelize.STRING
+    },
+    googleToken: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    google_email: {
+      type: Sequelize.STRING
+    }
   });
 
   return User;

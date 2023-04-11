@@ -1,6 +1,4 @@
 const db = require("../../models");
-const config = require("../../config/auth.config");
-const { verification } = require("../../middleware");
 const { user: User} = db;
 
 const Op = db.Sequelize.Op;

@@ -1,148 +1,82 @@
-const db = require("../../models");
-const { language: Language } = db;
-
-const Op = db.Sequelize.Op;
-
-const getPagination = (page, size) => {
-    const limit = size ? +size : 30;
-    const offset = page ? page * limit : 0;
-
-    return { limit, offset };
-};
-
-const getPagingData = (data, page, limit) => {
-    const { count: totalItems, rows: Language } = data;
-    const currentPage = page ? +page : 0;
-    const totalPages = Math.ceil(totalItems / limit);
-
-
-    return { totalItems, totalPages, currentPage, Language };
-};
+const fs = require('fs');
+const path = require('path');
+const TRANSLATION_DIR = path.join(__dirname, '../../config/translations/');
 
 
 exports.findAllLanguages = (req, res) => {
-    const { page, size } = req.query;
-    const { limit, offset } = getPagination(page, size);
 
-    Language.findAndCountAll({ limit, offset })
-        .then(data => {
-            const response = getPagingData(data, page, limit);
-            return res.status(200).send(response);
-        })
-        .catch(err => {
-            return res.status(500).send({
-                message:
-                    err.message || "Some error occurred while retrieving Languages."
-            });
-        });
 
 };
 
 exports.findOneLanguage = (req, res) => {
-    const id = req.query.id
 
-    Language.findByPk(id)
-        .then(data => {
-            return res.status(200).res.send(data);
-        })
-        .catch(err => {
-            return res.status(500).send({
-                message: "Error retrieving Language with id=" + id
-            });
-        });
 };
 
 
-exports.add = (req, res) => {
-    Language.create(req.body).then(discount => {
+exports.addLanguage = (req, res) => {
+    const { language } = req.body;
+    if (!language || language === ''){    
+        return res.status(500).send('Invalid Request');
+       }
+       const filePath = `${TRANSLATION_DIR}${language}.json`;
+       const mainFilepath = `${TRANSLATION_DIR}en.json`;
+       const infoFilepath = `${TRANSLATION_DIR}info.json`;
+       const state = JSON.parse(fs.readFileSync(mainFilepath, 'utf8'));
 
-        if (!discount) {
-            return res.status(400).send({ message: "Error while saving Language" });
+       fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (!err) {
+          // File already exists
+          return res.status(400).send('Translation file already exists');
         }
-
-        if (discount) {
-            return res.status(200).send(discount);
-        }
-    }).catch(err => {
-        return res.status(500).send({ message: err.message });
-    });
-
+  
+        // Create a new translations object for the new language
+        const translations = 
+          {
+            language,
+              translation: Object.entries(state.translation).reduce((acc, [key, val] = entry) => {
+            //  console.log(acc)
+              acc[key] = val;
+              return acc;
+            }, {}),
+          };
+        
+  
+        // Create the new file and save the translations object to it
+        fs.writeFile(filePath, JSON.stringify(translations), (err) => {
+          if (err) {
+            console.error(err);
+            return res.status(500).send('Failed to create translation file');
+          }
+  
+          // Update the info.json file with the new language name
+          const info = JSON.parse(fs.readFileSync(infoFilepath, 'utf8'));
+          info.languages.push(language);
+  
+  
+          fs.writeFile(infoFilepath, JSON.stringify(info), (err) => {
+            if (err) {
+              console.error(err);
+              return res.status(500).send('Failed to update info file');
+            }
+  
+            // Send the translations object for the new language
+            return res.status(200).send('Languade added succsfuly');
+          });
+        });
+      });
 };
 
 exports.updateOneLanguage = (req, res) => {
-    const id = req.query.id;
-
-    Language.update(req.body, {
-        where: { id: id }
-    })
-        .then(num => {
-            if (num == 1) {
-                return res.status(200).send({
-                    message: "Language was updated successfully."
-                });
-            } else {
-                return res.status(400).res.send({
-                    message: `Cannot update Language with id=${id}. Maybe Language was not found or req.body is empty!`
-                });
-            }
-        })
-        .catch(err => {
-            return res.status(500).send({
-                message: "Error updating Language with id=" + id
-            });
-        });
+  
 };
 
 
 exports.deleteOneLanguage = (req, res) => {
-    const id = req.query.id;
-
-    Language.destroy({
-        where: { id: id }
-    })
-        .then(num => {
-            if (num == 1) {
-                return res.status(200).res.send({
-                    message: "Language was deleted successfully!"
-                });
-            } else {
-                return res.status(400).res.send({
-                    message: `Cannot delete Language with id=${id}. Maybe Language was not found!`
-                });
-            }
-        })
-        .catch(err => {
-            return res.status(500).send({
-                message: "Could not delete Language with id=" + id
-            });
-        });
+    
 };
 
 
 exports.search = (req, res) => {
-    const { page, size } = req.query;
-    const { limit, offset } = getPagination(page, size);
-    var condition = req.body
-    var obj = {}
-    for (const key in condition) {
 
-        obj[`${key}`] = { [Op.like]: `%${condition[key]}%` };
-        //console.log(`${key}: ${condition[key]}`);
-    }
-
-
-    Language.findAndCountAll({
-        where: obj, limit, offset
-    })
-        .then(data => {
-            const response = getPagingData(data, page, limit);
-            return res.status(200).send(response);
-        })
-        .catch(err => {
-            return res.status(500).send({
-                message:
-                    err.message || "Some error occurred while retrieving tutorials."
-            });
-        });
 };
 

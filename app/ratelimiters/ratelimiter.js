@@ -9,7 +9,11 @@ const createAccountLimiter = rateLimiter ({
     max: 5,
     message: 'Too many accounts are created from this ip please try after 1 minute !'
 });
-
+const loginAccountLimiter = rateLimiter ({
+    windowMs: 1 * 60 * 1000,
+    max: 5,
+    message: 'Too many login attempts are created from this ip please try after 1 minute !'
+});
 
 // Rate Limiter to handle the forgot password attempts
 const forgotPasswordLimiter = rateLimiter ({
@@ -22,5 +26,6 @@ const forgotPasswordLimiter = rateLimiter ({
 // Exporting the CreateAccountLimiter and forgot Password Limiter
 module.exports = {
     createAccountLimiter,
-    forgotPasswordLimiter
+    forgotPasswordLimiter,
+    loginAccountLimiter
 }
