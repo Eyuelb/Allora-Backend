@@ -12,7 +12,7 @@ const app = express();
 const server = http.createServer(app);
 // const io = require("socket.io")(server, {
 //   cors: {
-//     origin: "http://localhost:5173",  
+//     origin: "http://localhost:5173",   
 //     methods: ["GET", "POST"]
 //   }
 // });
@@ -40,7 +40,7 @@ app.use (bodyParser.json ({ limit: '10kb' }));
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 const secretKey = process.env.SESSION_SECRET_KEY || '';
-
+console.log(secretKey)
 app.use(session({
   secret: secretKey,
   resave: false,
