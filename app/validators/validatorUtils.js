@@ -2,7 +2,7 @@ const httpError = require('http-errors');
 const validator = require('validator');
 const db = require("../models");
 const { user: User, address: Address, cartItem: CartItem,card: Card } = db;
-
+ 
 // ------- sync helper functions ----------------------------------
 
 /**
