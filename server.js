@@ -46,7 +46,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: true,
+    secure: true, 
     httpOnly: true,
     maxAge: 30 * 60 * 1000 // session timeout of 30 minutes
   }
